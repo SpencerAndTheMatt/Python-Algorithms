@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jun 26 14:32:52 2020
+@author: SpencerAndTheMatt
+Hi User!
+"""
+'''C A N D L E  M A K I N G  P R O G R A M M E'''
+#Input name
+name = input('Please enter your name.\n')
+
+#Define function
+def candle(percent, size):
+    return ((percent/100)*size);
+  
+#Input and set variables to input
+print('Hi ', name, ' welcome to the programme. Be sure to only enter numbers!\nLetters will make the programme sad.');
+per = input('Please input percent required\n(Do not include % sign)\n');
+sizeJar = input('Please input size of candle jar in ml\n(Do not include ml)\n');
+
+#Set inputs to floats
+per = float(per);
+sizeJar = float(sizeJar);
+
+#Running calculations and printing result
+x = candle(per, sizeJar);
+print(per, '% of ', sizeJar, 'ml is %.1f' % x, 'ml');
+
+'''P R O G R A M M E  E N D'''
+###############################################################################################################################
