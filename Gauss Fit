@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul  8 13:03:15 2020
+@author: SpencerAndTheMatt
+Gauss Fit programme for a single Gaussian Curve
+"""
+
+#Defining imports
+import numpy as np #Mathematic functions/constants
+import matplotlib.pyplot as plt #Graph plotting
+from scipy.optimize import curve_fit #Curve fit function
+
+'''Note - This programme can take any x and y array. You will just need to 
+remember to change the guess parameters. This data given is purely to demonstrate 
+the function of the curve fit'''
+
+#Defining y array
+arr1 = np.arange(100)
+arr2 = np.arange(100, 0, -1)
+y_values = np.append(arr1, arr2)
+
+#Defining x array
+x_values = np.arange(0, len(y_values), 1)
+
+'''Defining Gauss function below. Parameters taken are
+x = Where the peak occurs on the x axis
+height = Where the peak occurs on the y axis
+mu = Mean of the population
+sigma = Standard deviation of population
+c = background correction
+m = gradient correct'''
+def Gauss(x, height, mu, sigma, c, m):
+    return (height*np.exp(-(x-mu)**2/(2*sigma**2))) + c + x*m
+
+#Need to set 'guess' parameters of height, mu, sigma, c, m
+guessParameters = [100, 40, 20, 1, 1] #Change this if you've used your own data!
+
+#Find optimal parameters using curve fit function where popt is parameters and pcov is error
+popt, pcov = curve_fit(Gauss, x_values, y_values, guessParameters)
+
+#Plot actual data
+plt.figure(1)
+plt.plot(x_values, y_values, 'rx', markersize = '2', label='x and y data')
+plt.title('Graph of y vs x')
+plt.xlabel('X axis')
+plt.ylabel('Y axis')
+plt.grid()
+
+#Plot curve
+plt.figure(1)
+plt.plot(x_values, Gauss(x_values, *popt), 'b', label='Gauss fit')
+plt.legend(loc='best')
+
+#Finding error
+error = np.sqrt(pcov.diagonal())
+
+#Defining variables of height, mu, sigma, c, m in terms of popt coefficients
+optHeight, optMu, optSigma, optC, optM = popt
+heightErr, muErr, sigmaErr, cErr, mErr = error
+
+#Printing variables in easy to read format to 3 d.p
+print('Height at %.3f' % optHeight, '+/- %.3f' % heightErr, '\n')
+print('Mu at %.3f' % optMu, '+/- %.3f' % muErr, '\n')
+print('Sigma at %.3f' % optSigma, '+/- %.3f' % sigmaErr, '\n')
+print('Background correction c at %.3f' % optC, '+/- %.3f' % cErr, '\n')
+print('Gradient correction m at %.3f' % optM, '+/- %.3f' % mErr, '\n')
+
+'''End of programme'''
