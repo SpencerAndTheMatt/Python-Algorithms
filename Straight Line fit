@@ -1,0 +1,88 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug  3 13:14:44 2020
+
+@author: SpencerAndTheMatt
+
+Basic straight line fitting programme
+"""
+
+#Define required imports
+import numpy as np;
+import matplotlib.pyplot as plt;
+
+#Make arrays of data
+arrayX = np.arange(0, 10, 1);
+arrayY = np.arange(0, 10, 1);
+
+#Use polyfit to find slope & intercept
+p_coeff, residuals, _, _, _ = np.polyfit(arrayX, arrayY, 1, full=True); #np.polyfit(x data, y data, degree)
+p = np.poly1d(p_coeff);
+
+#Create points for p() to use
+points = np.linspace(min(arrayX), max(arrayX), 100);
+
+#plot points onto a graph
+plt.figure(1);
+plt.plot(arrayX, arrayY, 'r+', label = 'data');
+plt.xlabel('X-axis');
+plt.ylabel('Y-axis');
+plt.title('Graph of y vs x');
+
+#Plot fitted line onto graph
+plt.plot(points, p(points), 'b', label = 'best fit line');
+plt.legend(loc = 'best');
+
+#Write function to print out variables with error
+def giveVariables(xData, yData, p_coeff, residuals):
+    #First find n
+    n = len(xData);
+    
+    #Find value of D
+    D = np.sum(xData**2) - 1./n*np.sum(xData)**2
+    
+    #Find value of xBar (average value of x data)
+    xBar = np.mean(xData);
+    
+    #Find errors in m and c
+    error_m_squared = 1./(n-2)*residuals/D;
+    error_c_squared = 1./(n-2)*(D/n + xBar**2)*residuals/D;
+    
+    errorM = np.sqrt(error_m_squared);
+    errorC = np.sqrt(error_c_squared);
+    
+    #Print out values with errors
+    print('Gradient is %.1e' % p_coeff[0], ' +/- %.1e' % errorM);
+    print('Intercept is %.1e' % p_coeff[1], ' +/- %.1e' % errorC);
+    
+#End of giveVariables() function
+
+#Using function
+giveVariables(arrayX, arrayY, p_coeff, residuals);
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
