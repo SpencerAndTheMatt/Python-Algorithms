@@ -1,0 +1,50 @@
+# Tensor flow programme for clustering
+# Hidden Markov Model
+
+
+#Define imports
+import tensorflow_probability as tfp
+import tensorflow as tf
+
+'''
+Clustering finds clusters of alike points and informs you of the locations 
+of these points.
+The basic algorithm for K-Means is
+1 - Randomly pick K points to place K centroids (you define K)
+2 - Assign all data points to centroids by distance. The closest centroid is 
+assigned to the point
+3 - Average all points belonging to each centroid to find the 'center of mass'
+4 - re-assign every point once again to the closest centroid
+5 - repeat steps 3-4 until no point changes which centroid it's assigned to
+'''
+
+'''
+Weather model
+1. Cold days are 0, hot days are 1
+2. First day has 80% chance of being cold
+3. Cold day has 30% chance of being followed by a hot day
+4. Hot day has 20% chance of being followed by a cold day
+5. On each day, the temperature is normally distributed with a mean/standard deviation of 0/5
+on a cold day and a mean/standard deviation of 15/10 on a hot day
+'''
+
+tfd = tfp.distributions #Shortcut for later
+initial_distribution = tfd.Categorical(probs=[0.2, 0.8]) #From point 2
+transition_distribution = tfd.Categorical(probs=[[0.5, 0.5],
+                                                 [0.2, 0.8]]) #From point 3 and 4
+observation_distribution = tfd.Normal(loc=[0., 15.], scale=[5., 10.]) #From point 5
+#Loc argument is mean and scale is standard deviation
+
+#Creating model
+model = tfd.HiddenMarkovModel(
+    initial_distribution = initial_distribution,
+    transition_distribution = transition_distribution,
+    observation_distribution = observation_distribution,
+    num_steps = 7) #Steps -> how many times model is run
+
+#Output
+mean = model.mean() #Find probabilities from model
+
+#Must evaluate part of graph from within a session to find value of tensor
+with tf.compat.v1.Session() as sess:
+    print(mean.numpy()) #Expected temperatures on each day -> day 1, day 2, day 3 etc
