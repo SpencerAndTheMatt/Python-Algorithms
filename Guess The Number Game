@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+Author: SpencerAndTheMatt
+
+Guess the number!
+"""
+
+#Define imports
+import random as random
+
+#Define initial variables
+lowerLimit = 0;
+upperLimit = 1;
+
+#DEFINING FUNCTIONS
+#Function to ask user to guess number
+def guess():
+    #answer = random.randint(lowerLimit, upperLimit)
+    try:
+        guessInput=int(input('Enter your guess\n'))
+    except:
+        print('Please enter integers\n')
+        guess()
+    if guessInput == answer:
+        print('Correct!')
+    elif guessInput > answer:
+        print('Lower!')
+        guess()
+    else:
+        print('Higher')
+        guess()
+
+#Decider to double check if user is happy with inputs
+def decider():
+    decision = input('Are you happy with your numbers? Please answer y/n')
+    if decision == 'y':
+        print("Ok let's go!")
+    elif decision == 'n':
+        pickLimits()
+    else:
+        decider();
+    
+#Function for inputs
+def pickLimits():
+    global lowerLimit
+    global upperLimit
+    try:       
+        lowerLimit = int(input('Enter lowest number\n'))
+        upperLimit = int(input('Enter highest number\n'))
+    except:
+        print('Please pick integers\n')
+        pickLimits()
+    
+#Run functions
+pickLimits()
+decider()
+answer = random.randint(lowerLimit, upperLimit)
+guess()
