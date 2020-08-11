@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug  6 15:18:35 2020
+
+@author: SpencerAndTheMatt
+
+2D random walk
+"""
+
+#Define imports 
+import random as random
+import matplotlib.pyplot as plt
+
+#Define recursion limit
+import sys
+sys.setrecursionlimit(2000)
+
+#Arrays for x and y
+arrayX = [0]
+arrayY = [0]
+
+#Append array helper function
+def appendArrays(xAppend, yAppend):
+    arrayX.append(arrayX[-1] + xAppend)
+    arrayY.append(arrayY[-1] + yAppend)
+
+#Write function for a random step in x or y
+def randomWalk(n):
+    if n > 0:
+        randomNumber = random.randint(1, 4)
+        if randomNumber == 1:
+            appendArrays(1, 0)
+        elif randomNumber == 2:
+            appendArrays(-1, 0)
+        elif randomNumber == 3:
+            appendArrays(0, 1)
+        else:
+            appendArrays(0, -1)
+    
+        randomWalk(n-1)
+    else:
+        return 0
+
+#Activate randomWalk function
+randomWalk(1500)
+
+#Plot random walk
+plt.plot(arrayX, arrayY)
+    
+
+
+
