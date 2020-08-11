@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Aug 11 15:56:00 2020
+
+@author: SpencerAndTheMatt
+
+Fibonacci Sequence Checker for first 1000 Fibonacci numbers
+"""
+
+#Make list to store Fibonacci sequence values
+fibArray =[1, 1]
+
+#Create Fibonacci Sequence function
+
+def fib(n):
+    #Can check list here: https://www.mathsisfun.com/numbers/fibonacci-sequence.html
+    if n > 0:
+        fibArray.append(fibArray[-1] + fibArray[-2])
+    else:
+        return 0
+    fib(n-1)
+
+#Check number function
+def checkNumber(x):
+    fib(1000)
+    
+    if x in fibArray:
+        return True
+    else:
+        return False
+
+#Check if number part of fibonacci sequence
+print(checkNumber(8))
