@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 12 16:17:56 2020
+
+@author: SpencerAndTheMatt
+
+HTTP Request 2 + Webpage scraping
+
+This video from freeCodeCamp has a full explaination of the web browser
+https://www.freecodecamp.org/learn/scientific-computing-with-python/python-for-everybody/networking-using-urllib-in-python
+
+This video from freeCodeCamp has a full explaination of using BeautifulSoup4
+https://www.freecodecamp.org/learn/scientific-computing-with-python/python-for-everybody/networking-web-scraping-with-python
+"""
+
+#Define import for retrieving webpage
+import urllib.request, urllib.parse, urllib.error
+from bs4 import BeautifulSoup
+
+#Obtaining webpage
+url = 'http://www.dr-chuck.com/page1.htm'
+html = urllib.request.urlopen(url).read()
+soup = BeautifulSoup(html, 'html.parser')
+
+#Find all anchor tags
+tags = soup('a')
+for tag in tags:
+    print(tag.get('href', None))
+
+
+
