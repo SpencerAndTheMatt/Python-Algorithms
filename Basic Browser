@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 12 14:00:16 2020
+
+@author: SpencerAndTheMatt
+
+HTTP Request
+"""
+
+#Define imports
+import socket
+
+#Connect socket
+mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+mysock.connect(('en.wikipedia.org', 80)) #Connect to website at port 80
+cmd = 'GET https://en.wikipedia.org/wiki/Expressway_S19_(Poland) HTTP/1.0\n\n'.encode() #GET this web address, leave 2 blank lines
+mysock.send(cmd) #Send
+
+#Return the data
+while True:
+    data = mysock.recv(512) #512 characters each time
+    if (len(data) < 1): #Close connection when all characters received
+        break
+    print(data.decode()) #Decode data
+mysock.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
