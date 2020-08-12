@@ -45,10 +45,17 @@ def randomWalk(n):
 randomWalk(1500)
 
 #Plot random walk
-plt.plot(arrayX, arrayY)
+plt.plot(arrayX, arrayY, 'c-', markersize = 0.5, label = 'Random Walk')
 plt.title('Random Walk')
 plt.xlabel('X steps')
 plt.ylabel('Y steps')
+
+#Plot start and end so it's clearer
+plt.plot(arrayX[0], arrayY[0], 'ro', markersize = 5, label = 'Start')
+plt.plot(arrayX[-1], arrayY[-1], 'go', markersize = 5, label = 'End')
+plt.legend(loc='best')
+
+
 
     
 
