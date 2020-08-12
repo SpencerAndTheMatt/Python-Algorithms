@@ -46,6 +46,12 @@ randomWalk(1500)
 
 #Plot random walk
 plt.plot(arrayX, arrayY)
+plt.title('Random Walk')
+plt.xlabel('X steps')
+plt.ylabel('Y steps')
+
+    
+
     
 
 
