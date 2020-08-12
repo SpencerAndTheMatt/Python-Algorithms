@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 12 16:17:56 2020
+
+@author: SpencerAndTheMatt
+
+HTTP Request 2
+
+This video from freeCodeCamp has a full explaination
+https://www.freecodecamp.org/learn/scientific-computing-with-python/python-for-everybody/networking-using-urllib-in-python
+"""
+
+#Define imports
+import urllib.request, urllib.parse, urllib.error
+
+fhand = urllib.request.urlopen('https://en.wikipedia.org/wiki/Guzmania_%27Zeus%27') #Connects, encodes and returns an object that looks like a file handle
+for line in fhand:
+    print(line.decode().strip()) #Loop through every line, decode() which puts it into readable characters, then strip() will output it.
