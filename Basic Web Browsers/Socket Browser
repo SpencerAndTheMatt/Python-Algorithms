@@ -4,7 +4,10 @@ Created on Wed Aug 12 14:00:16 2020
 
 @author: SpencerAndTheMatt
 
-HTTP Request
+Basic socket browser
+
+This freeCodeCamp video has a full explaination
+https://www.freecodecamp.org/learn/scientific-computing-with-python/python-for-everybody/networking-text-processing
 """
 
 #Define imports
