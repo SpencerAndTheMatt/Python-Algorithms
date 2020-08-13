@@ -1,0 +1,105 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug 13 10:10:34 2020
+
+@author: SpencerAndTheMatt
+
+Arithmetic Formatter
+"""
+
+class Helpers(): #Class of helper function(s)
+
+    #formatOne() function to format a single string
+    def formatOne(singleProblem, bool=False):
+        
+        #Split one problem into 3 parts
+        splitProblem = singleProblem.split(' ')
+        
+        #Give number items in list its own variable
+        firstNum = splitProblem[0]
+        secondNum = splitProblem[2]
+           
+        #Error testing section
+        #Error test - operator must be '+' or '-'
+        if splitProblem[1] != '+' and splitProblem[1] != '-':
+            return "Error: Operator must be '+' or '-'."
+        
+        #Error test - must be digits
+        try:
+            int(firstNum)
+            int(secondNum)
+        except:
+            return 'Error: Numbers must only contain digits.'
+              
+        #Error test - must have len < 4
+        if len(firstNum) > 4 or len(secondNum) > 4:
+            return 'Error: Numbers cannot be more than four digits.'
+        #End of error testing
+
+        #Find max length for underscores
+        underscoreLength = len(str(max((int(firstNum), int(secondNum)))))+2
+        
+        #Format problem
+        if int(firstNum) >= int(secondNum): #If first num longer/equal to the second
+            topNumber = firstNum.rjust(underscoreLength + 1)
+            operator = splitProblem[1].ljust(0)
+            bottomNumber = secondNum.rjust(len(firstNum))
+
+        else: #If second number longer
+            topNumber = firstNum.rjust(underscoreLength + 1)
+            operator = splitProblem[1].ljust(0)
+            bottomNumber = secondNum.rjust(underscoreLength-2)
+      
+        #Form dashes 
+        dashes = ' '.ljust(underscoreLength + 1, '-')
+        
+        #Provide answer if bool = True
+        if bool:
+            if splitProblem[1] == '+':
+                answerToQuestion = str(int(firstNum) + int(secondNum)).rjust(underscoreLength + 1)
+                #print(answerToQuestion)
+            elif splitProblem[1] == '-':
+                answerToQuestion = str(int(firstNum) - int(secondNum)).rjust(underscoreLength + 1)
+                #print(answerToQuestion)
+        else:
+            answerToQuestion = ''  
+        
+        #Define finalFormat() function
+        def finalFormat():
+                print(topNumber); print('', operator, bottomNumber); 
+                print(dashes); print(answerToQuestion)
+        
+        #Return finalFormat() function
+        return finalFormat()
+        #formatOne() end
+        
+    #Function using formatOne() to format all given arguments
+    def formatAll(problems, bool=False):
+        
+        #Error test - len(problems) must be < 5                
+        if len(problems) > 5:
+            return 'Error: Too many problems.'
+        #End of error test
+        
+        #Loop through the number of problems, put each one into 
+        #Helpers.formatOne() function
+        for i in range(len(problems)):
+            Helpers.formatOne(problems[i], bool)
+            print('\n')
+    
+  
+#Form a function to carry out the helpers.formatOne() function on up to 5 entries
+def arithmetic_arranger(problems, bool=False): 
+    return Helpers.formatAll(problems, bool)
+    
+              
+#Testing suite
+  
+(arithmetic_arranger(['60 + 400', '30 + 70'], True))
+      
+    
+    
+
+    
+    
+    
