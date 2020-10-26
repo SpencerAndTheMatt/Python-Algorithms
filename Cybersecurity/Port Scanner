@@ -1,0 +1,61 @@
+#Python Port Scanner
+#@SpencerAndTheMatt
+#Credit to NeuralNine (on youtube) for the tutorial
+
+#Define imports
+import socket
+import threading
+from queue import Queue
+
+#Define target
+target = '127.0.0.1' #Local host
+
+#Define queue and empty list for open ports
+queue = Queue()
+open_ports = []
+
+#Define portscan function
+def portscan(port):
+    try: 
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #INET is an internet scoket, rather than a unix socket. SOCK_STREAM is TCP.
+        sock.connect((target, port)) #Connect method requires tuple of ip target and port.
+        return True #If portscan successful (port is open)
+    except:
+        return False
+
+#Define fill queue method
+def fill_queue(port_list):
+    for port in port_list:
+        queue.put(port) #Queue uses first in first out system
+
+#Define worker method
+def worker(): #A helper function for the other functions to use
+    while not queue.empty(): #As long as queue not empty
+        port = queue.get()
+        if portscan(port):
+            print('Port {} is open!'.format(port))
+            open_ports.append(port)
+        #We're not going to print closed ports
+
+#Define port list and fill queue with port list
+port_list = range(1, 1024)
+fill_queue(port_list)
+
+#Define empty thread list
+thread_list = []
+
+#Define number of threads to run in loop
+for t in range(1000): #Range(10) = 10 threads
+    thread = threading.Thread(target=worker) #Referring to worker function without actually calling it here
+    thread_list.append(thread)
+
+#Threads created, time to run it
+for thread in thread_list:
+    thread.start()
+
+#Wait for threads to finish
+for thread in thread_list:
+    thread.join()
+
+#Print open ports
+print('Open ports are: ', open_ports)
